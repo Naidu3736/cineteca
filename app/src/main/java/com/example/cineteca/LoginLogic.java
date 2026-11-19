@@ -22,6 +22,12 @@ public class LoginLogic extends AppCompatActivity {
 
         dbHelper = new DataUsers(this);
 
+        // Pedir permiso de notificaciones (Android 13+)
+        if (!Notification.tienePermiso(this)) {
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(), granted -> { })
+                    .launch(android.Manifest.permission.POST_NOTIFICATIONS);
+        }
+
         TextView goToRegister = findViewById(R.id.Register);
         EditText etUserOrEmail = findViewById(R.id.etUserOrEmail);
         EditText etPassword = findViewById(R.id.PasswordC);
@@ -44,9 +50,8 @@ public class LoginLogic extends AppCompatActivity {
             }
 
             if (dbHelper.validateLogin(userOrEmail, password)) {
-                Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginLogic.this, MainActivity.class);
-                startActivity(intent);
+                Notification.saludo(this, dbHelper.getUsername(userOrEmail));
+                startActivity(new Intent(LoginLogic.this, MainActivity.class));
                 finish();
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
