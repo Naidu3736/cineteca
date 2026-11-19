@@ -37,7 +37,6 @@ public class SignUpLogic extends AppCompatActivity {
 
             boolean registeruser = dbHelper.registeruser(username, email, password);
             if (registeruser) {
-                Toast.makeText(this, "Cuenta creada con éxito", Toast.LENGTH_SHORT).show();
                 Notification.saludo(this, username);
                 finish(); // Regresamos al Login
             } else {

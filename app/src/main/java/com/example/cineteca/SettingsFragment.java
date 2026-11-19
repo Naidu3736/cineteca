@@ -55,6 +55,17 @@ public class SettingsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Cerrar sesión: notificación de despedida y cierra la app
+        binding.btnSettingsLogout.setOnClickListener(v -> {
+            Notification.sesionCerrada(requireContext());
+            requireActivity().finishAffinity();
+        });
+    }
+
 //    @Override
 //    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);

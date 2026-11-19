@@ -113,6 +113,7 @@ public class MoviesFragment extends Fragment {
 
                     db.insert(new Movie(title, rating, poster));
                     loadMovies();
+                    Notification.peliculaAgregada(requireContext(), title);
                 })
                 .show();
     }

@@ -35,7 +35,11 @@ public final class Notification {
     }
 
     public static void sesionCerrada(Context context) {
-        mostrar(context, "Cineteca", "Sesión cerrada correctamente");
+        mostrar(context, "Cineteca", "Sesión cerrada correctamente. ¡Hasta pronto!");
+    }
+
+    public static void contrasenaCambiada(Context context) {
+        mostrar(context, "Cineteca", "Cambio de contraseña correcto");
     }
 
     public static void peliculaAgregada(Context context, String pelicula) {
