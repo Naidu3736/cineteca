@@ -21,12 +21,13 @@ import java.io.OutputStream;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+    private MovieStorageManager storage;
 
     private final ActivityResultLauncher<String> exportLauncher =
             registerForActivityResult(new ActivityResultContracts.CreateDocument("text/csv"), uri -> {
                 if (uri == null) return;
                 try (OutputStream out = requireContext().getContentResolver().openOutputStream(uri)) {
-                    CsvHelper.export(out, new MovieDbHelper(requireContext()).getAll());
+                    CsvHelper.export(out, storage.getAll());
                     Toast.makeText(requireContext(), "Exported", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     Toast.makeText(requireContext(), "Export failed", Toast.LENGTH_SHORT).show();
@@ -83,7 +84,9 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // 4. Botón Descargar CSV
+        // 4. Almacenamiento de registros (SQLite / CSV) y botón Descargar CSV
+        storage = new MovieStorageManager(requireContext());
+        storage.bindStorageRadioGroup(binding.rgStorageMode);
         binding.btnViewCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
     }
 

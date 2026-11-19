@@ -1,8 +1,10 @@
 package com.example.cineteca;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         Movie movie = items.get(position);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(String.format(Locale.US, "%.1f", movie.getRating()));
+
+        String posterUrl = movie.getPosterUrl();
+        if (posterUrl != null && !posterUrl.isEmpty()) {
+            try {
+                holder.poster.setImageURI(Uri.parse(posterUrl));
+            } catch (Exception e) {
+                holder.poster.setImageDrawable(null);
+            }
+        } else {
+            holder.poster.setImageDrawable(null);
+        }
     }
 
     @Override
@@ -45,11 +58,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView title;
         final TextView rating;
+        final ImageView poster;
 
         ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.tvTitulo);
             rating = view.findViewById(R.id.tvRating);
+            poster = view.findViewById(R.id.ivPoster);
         }
     }
 }

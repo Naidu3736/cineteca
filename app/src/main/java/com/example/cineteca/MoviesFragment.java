@@ -1,11 +1,15 @@
 package com.example.cineteca;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -23,10 +27,25 @@ import java.util.List;
 public class MoviesFragment extends Fragment {
 
     private FragmentMoviesBinding binding;
-    private MovieDbHelper db;
+    private MovieStorageManager db;
     private MovieAdapter adapter;
     private List<Movie> allMovies = new ArrayList<>();
     private String query = "";
+    private String selectedPosterUri = "";
+    private Button activePosterButton;
+
+    private final ActivityResultLauncher<String[]> pickPosterLauncher =
+            registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+                if (uri == null) return;
+                try {
+                    requireContext().getContentResolver().takePersistableUriPermission(
+                            uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (SecurityException ignored) { }
+                selectedPosterUri = uri.toString();
+                if (activePosterButton != null) {
+                    activePosterButton.setText("Imagen seleccionada");
+                }
+            });
 
     @Nullable
     @Override
@@ -42,7 +61,7 @@ public class MoviesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ThemeHelper.applyThemeToView(binding.getRoot());
 
-        db = new MovieDbHelper(requireContext());
+        db = new MovieStorageManager(requireContext());
         adapter = new MovieAdapter();
         binding.recyclerPeliculas.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerPeliculas.setAdapter(adapter);
@@ -93,6 +112,11 @@ public class MoviesFragment extends Fragment {
 
     private void showAddDialog() {
         DialogAddMovieBinding form = DialogAddMovieBinding.inflate(getLayoutInflater());
+        ThemeHelper.applyThemeToView(form.getRoot());
+        selectedPosterUri = "";
+        activePosterButton = form.btnSelectPoster;
+        form.btnSelectPoster.setOnClickListener(v ->
+                pickPosterLauncher.launch(new String[]{"image/*"}));
 
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Add movie")
@@ -111,9 +135,7 @@ public class MoviesFragment extends Fragment {
                     } catch (NumberFormatException ignored) { }
                     rating = Math.max(0, Math.min(10, rating));
 
-                    String poster = String.valueOf(form.etCustomPoster.getText()).trim();
-
-                    db.insert(new Movie(title, rating, poster));
+                    db.insert(new Movie(title, rating, selectedPosterUri));
                     loadMovies();
                 })
                 .show();

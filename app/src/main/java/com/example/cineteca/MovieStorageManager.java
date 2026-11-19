@@ -29,17 +29,6 @@ public class MovieStorageManager {
         this.context = context.getApplicationContext();
         this.prefs = this.context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.dbHelper = new MovieDbHelper(this.context);
-        ensureMoviesTableExists();
-    }
-
-    private void ensureMoviesTableExists() {
-        dbHelper.getWritableDatabase().execSQL(
-                "CREATE TABLE IF NOT EXISTS movies ("
-                        + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                        + "title TEXT NOT NULL, "
-                        + "rating REAL, "
-                        + "poster_url TEXT)"
-        );
     }
 
     public String getStorageMode() {
@@ -96,21 +85,30 @@ public class MovieStorageManager {
         return dbHelper.insert(movie);
     }
 
+    public int update(Movie movie) {
+        if (isCsvMode()) {
+            List<Movie> current = readAllFromCsv();
+            for (int i = 0; i < current.size(); i++) {
+                if (current.get(i).getId() == movie.getId()) {
+                    current.set(i, movie);
+                    return writeAllToCsv(current) ? 1 : 0;
+                }
+            }
+            return 0;
+        }
+        return dbHelper.update(movie);
+    }
+
     public int delete(long id) {
         if (isCsvMode()) {
             List<Movie> current = readAllFromCsv();
-            int removed = 0;
-            for (int i = current.size() - 1; i >= 0; i--) {
+            for (int i = 0; i < current.size(); i++) {
                 if (current.get(i).getId() == id) {
                     current.remove(i);
-                    removed = 1;
-                    break;
+                    return writeAllToCsv(current) ? 1 : 0;
                 }
             }
-            if (removed > 0 && !writeAllToCsv(current)) {
-                return 0;
-            }
-            return removed;
+            return 0;
         }
         return dbHelper.delete(id);
     }
