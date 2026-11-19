@@ -55,14 +55,37 @@ public class SettingsFragment extends Fragment {
         return binding.getRoot();
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        binding.btnExportCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
-//        binding.btnImportCsv.setOnClickListener(v ->
-//                importLauncher.launch(new String[]{"text/csv", "text/comma-separated-values", "text/plain"}));
-//    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // 1. Marcar el botón activo según el tema guardado (Dark por defecto)
+        if (ThemeHelper.isDarkMode(requireContext())) {
+            binding.toggleDarkMode.check(R.id.btn_mode_dark);
+        } else {
+            binding.toggleDarkMode.check(R.id.btn_mode_light);
+        }
+
+        // 2. Aplicar colores actuales al abrir Ajustes
+        ThemeHelper.applyThemeToView(binding.getRoot());
+
+        // 3. Conectar los botones Tema Claro / Tema Oscuro
+        binding.toggleDarkMode.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (!isChecked) return;
+            boolean wantDark = (checkedId == R.id.btn_mode_dark);
+
+            if (wantDark != ThemeHelper.isDarkMode(requireContext())) {
+                ThemeHelper.setDarkMode(requireContext(), wantDark);
+                ThemeHelper.applyThemeToView(binding.getRoot());
+                if (getActivity() != null) {
+                    ThemeHelper.applyThemeToView(getActivity().findViewById(R.id.main));
+                }
+            }
+        });
+
+        // 4. Botón Descargar CSV
+        binding.btnViewCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
+    }
 
     @Override
     public void onDestroyView() {

@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        ThemeHelper.setDarkMode(this, ThemeHelper.isDarkMode(this));
+        ThemeHelper.applyThemeToView(binding.getRoot());
+
         // 1. Ajuste de barras del sistema (Edge-to-Edge)
         ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
