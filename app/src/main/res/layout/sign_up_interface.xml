@@ -88,6 +88,8 @@
                 android:textSize="15sp" />
 
             <!-- Correo electrónico -->
+
+            <!-- Contraseña -->
             <EditText
                 android:id="@+id/Email"
                 android:layout_width="match_parent"
@@ -101,7 +103,6 @@
                 android:textColorHint="@color/muted"
                 android:textSize="15sp" />
 
-            <!-- Contraseña -->
             <EditText
                 android:id="@+id/PasswordC"
                 android:layout_width="match_parent"
