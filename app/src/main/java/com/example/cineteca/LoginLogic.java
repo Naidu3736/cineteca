@@ -39,7 +39,9 @@ public class LoginLogic extends AppCompatActivity {
 
             if (dbHelper.validateLogin(userOrEmail, password)) {
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                // Aqui va la logica de la pantalla principal
+                Intent intent = new Intent(LoginLogic.this, MainActivity.class);
+                startActivity(intent);
+                finish();
 
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
