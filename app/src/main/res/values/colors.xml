@@ -7,4 +7,8 @@
     <color name="border">#45505C</color>
     <color name="muted">#8A96A3</color>
     <color name="emerald_green">#1ED760</color>
+    <color name="crimson_primary">#C62828</color>
+    <color name="on_crimson_primary">#FFFFFF</color>
+    <color name="chip_unselected_bg">#EEEEEE</color>
+    <color name="chip_unselected_text">#212121</color>
 </resources>
