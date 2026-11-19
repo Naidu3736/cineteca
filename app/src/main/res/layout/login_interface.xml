@@ -80,7 +80,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/PasswordC"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="14dp"
