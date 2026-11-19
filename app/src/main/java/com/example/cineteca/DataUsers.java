@@ -61,4 +61,18 @@ public class DataUsers extends SQLiteOpenHelper {
         return exist;
     }
 
+    public boolean updatePassword(String userOrEmail, String nuevaPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PASSWORD, nuevaPassword);
+
+        int filasupdate = db.update(
+                TABLE_USERS,
+                values,
+                USERNAME + " = ? OR " + EMAIL + " = ?",
+                new String[]{userOrEmail, userOrEmail}
+        );
+        db.close();
+        return filasupdate > 0; // true si encontró al usuario y cambió la contraseña
+    }
 }
