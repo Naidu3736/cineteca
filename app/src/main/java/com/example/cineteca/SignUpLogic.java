@@ -39,7 +39,7 @@ public class SignUpLogic extends AppCompatActivity {
             if (registeruser) {
                 Toast.makeText(this, "Cuenta creada con éxito", Toast.LENGTH_SHORT).show();
                 Notification.saludo(this, username);
-                finish(); // Regresamos al Login
+                finish(); 
             } else {
                 Toast.makeText(this, "El usuario o correo ya está registrado", Toast.LENGTH_SHORT).show();
             }

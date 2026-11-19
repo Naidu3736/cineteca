@@ -28,8 +28,6 @@ public final class Notification {
     private Notification() {
     }
 
-    // ---------- Notificaciones de la app ----------
-
     public static void saludo(Context context, String usuario) {
         mostrar(context, "Cineteca", "¡Hola " + usuario + "!");
     }
@@ -58,7 +56,7 @@ public final class Notification {
         mostrar(context, "Tema cambiado", "Ahora usas el tema " + nombreTema + ".");
     }
 
-    // ---------- Permiso (Android 13+) ----------
+
 
     public static boolean tienePermiso(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -68,7 +66,6 @@ public final class Notification {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    // ---------- Internos ----------
 
     private static void mostrar(Context context, String titulo, String mensaje) {
         if (!tienePermiso(context)) {
@@ -93,7 +90,6 @@ public final class Notification {
         try {
             NotificationManagerCompat.from(context).notify(nextId++, builder.build());
         } catch (SecurityException ignored) {
-            // sin permiso: no se muestra
         }
     }
 
@@ -108,7 +104,6 @@ public final class Notification {
         }
     }
 
-    /** Toma el logo y lo vuelve un círculo de 256 px. */
     private static Bitmap logoCircular(Context context) {
         Bitmap original = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_cineteca);
         int size = 256;

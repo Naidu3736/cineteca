@@ -11,7 +11,6 @@ import java.util.List;
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 
-    // Cambiar a "movies.db" para evitar conflicto con la BD de usuarios
     private static final String DB_NAME = "movies.db";
     private static final int DB_VERSION = 1;
 

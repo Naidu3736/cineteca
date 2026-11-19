@@ -22,7 +22,6 @@ public class LoginLogic extends AppCompatActivity {
 
         dbHelper = new DataUsers(this);
 
-        // Pedir permiso de notificaciones (Android 13+)
         if (!Notification.tienePermiso(this)) {
             registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(), granted -> { })
                     .launch(android.Manifest.permission.POST_NOTIFICATIONS);

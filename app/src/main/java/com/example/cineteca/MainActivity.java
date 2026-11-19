@@ -28,24 +28,24 @@ public class MainActivity extends AppCompatActivity {
         ThemeHelper.setDarkMode(this, ThemeHelper.isDarkMode(this));
         ThemeHelper.applyThemeToView(binding.getRoot());
 
-        // 1. Ajuste de barras del sistema (Edge-to-Edge)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, 0, bars.right, bars.bottom);
             return insets;
         });
 
-        // 2. Conectar la Toolbar con los fragmentos
+
         setupToolbar();
 
-        // 3. Cargar la pantalla de Películas por defecto
+
         if (savedInstanceState == null) {
             navegarA(new MoviesFragment(), false);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             actualizarBarra("Ajustes", true);
         }
 
-        // 4. Manejo del botón Atrás (físico o por gesto)
+
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        // Clic en el ícono de Ajustes (definido en top_app_bar.xml)
+
         binding.materialToolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_settings) {
                 navegarA(new SettingsFragment(), true);
@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        // Clic en la flecha de regreso (cuando estamos en Ajustes)
+
         binding.materialToolbar.setNavigationOnClickListener(v -> {
             getSupportFragmentManager().popBackStack();
             actualizarBarra("Cineteca", false);
         });
     }
 
-    // Intercambio dinámico de fragmentos en el contenedor
+
     public void navegarA(Fragment fragment, boolean agregarAlBackStack) {
         var transaction = getSupportFragmentManager()
                 .beginTransaction()

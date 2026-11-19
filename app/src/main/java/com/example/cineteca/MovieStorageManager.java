@@ -64,7 +64,7 @@ public class MovieStorageManager {
 
         rgStorageMode.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_storage_csv) {
-                writeAllToCsv(dbHelper.getAll())
+                writeAllToCsv(dbHelper.getAll());
                 setStorageMode(MODE_CSV);
 
                 Toast.makeText(group.getContext(),

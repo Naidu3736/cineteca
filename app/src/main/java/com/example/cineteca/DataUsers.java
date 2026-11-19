@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataUsers extends SQLiteOpenHelper {
-    //Para llevar registro de los usuarios que se registren
+
     private static final String NAME = "cineteca.db";
     private static final int VERSION = 1;
 
@@ -49,7 +49,6 @@ public class DataUsers extends SQLiteOpenHelper {
         return result != -1; // true si se guardó, false si el usuario/correo ya existe
     }
 
-    // Devuelve el nombre de usuario para not
     public String getUsername(String userOrEmail) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + USERNAME + " FROM " + TABLE_USERS +

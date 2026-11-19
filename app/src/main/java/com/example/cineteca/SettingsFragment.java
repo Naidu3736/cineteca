@@ -60,7 +60,6 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 1. Marcar el botón activo según el tema guardado (Dark por defecto)
         binding.toggleDarkMode.setSaveEnabled(false);
         if (ThemeHelper.isDarkMode(requireContext())) {
             binding.toggleDarkMode.check(R.id.btn_mode_dark);
@@ -68,10 +67,8 @@ public class SettingsFragment extends Fragment {
             binding.toggleDarkMode.check(R.id.btn_mode_light);
         }
 
-        // 2. Aplicar colores actuales al abrir Ajustes
         ThemeHelper.applyThemeToView(binding.getRoot());
 
-        // 3. Conectar los botones Tema Claro / Tema Oscuro
         View.OnClickListener themeClickListener = v -> {
             boolean wantDark = (v.getId() == R.id.btn_mode_dark);
             if (wantDark != ThemeHelper.isDarkMode(requireContext())) {
@@ -86,12 +83,10 @@ public class SettingsFragment extends Fragment {
         binding.btnModeLight.setOnClickListener(themeClickListener);
         binding.btnModeDark.setOnClickListener(themeClickListener);
 
-        // 4. Almacenamiento de registros (SQLite / CSV) y botón Descargar CSV
         storage = new MovieStorageManager(requireContext());
         storage.bindStorageRadioGroup(binding.rgStorageMode);
         binding.btnViewCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
 
-        // 5. Mostrar usuario actual y botón Cerrar sesión
         String currentUser = requireContext()
                 .getSharedPreferences("cineteca_session", android.content.Context.MODE_PRIVATE)
                 .getString("current_user", "Usuario");
