@@ -2,7 +2,6 @@ package com.example.cineteca;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,14 +57,6 @@ public class MovieStorageManager {
         return MODE_CSV.equals(getStorageMode());
     }
 
-    public boolean isSqliteMode() {
-        return MODE_SQLITE.equals(getStorageMode());
-    }
-
-    /**
-     * Conecta el RadioGroup de fragment_settings.xml (rg_storage_mode)
-     * para que muestre el modo actual y permita al usuario cambiar entre SQLite y CSV.
-     */
     public void bindStorageRadioGroup(RadioGroup rgStorageMode) {
         if (rgStorageMode == null) return;
 
@@ -90,51 +80,20 @@ public class MovieStorageManager {
         });
     }
 
-
-    public void bindSettingsView(View settingsRootView) {
-        if (settingsRootView == null) return;
-        RadioGroup rg = settingsRootView.findViewById(R.id.rg_storage_mode);
-        bindStorageRadioGroup(rg);
-    }
-
     public List<Movie> getAll() {
         if (isCsvMode()) {
             return readAllFromCsv();
         }
-        ensureMoviesTableExists();
         return dbHelper.getAll();
     }
 
     public long insert(Movie movie) {
         if (isCsvMode()) {
             List<Movie> current = readAllFromCsv();
-            long nextId = current.size() + 1;
-            Movie withId = new Movie(nextId, movie.getTitle(), movie.getRating(), movie.getPosterUrl());
-            current.add(withId);
-            return writeAllToCsv(current) ? nextId : -1;
+            current.add(movie);
+            return writeAllToCsv(current) ? current.size() : -1;
         }
-        ensureMoviesTableExists();
         return dbHelper.insert(movie);
-    }
-
-    public int update(Movie movie) {
-        if (isCsvMode()) {
-            List<Movie> current = readAllFromCsv();
-            int updated = 0;
-            for (int i = 0; i < current.size(); i++) {
-                if (current.get(i).getId() == movie.getId()) {
-                    current.set(i, movie);
-                    updated = 1;
-                    break;
-                }
-            }
-            if (updated > 0 && !writeAllToCsv(current)) {
-                return 0;
-            }
-            return updated;
-        }
-        ensureMoviesTableExists();
-        return dbHelper.update(movie);
     }
 
     public int delete(long id) {
@@ -153,16 +112,11 @@ public class MovieStorageManager {
             }
             return removed;
         }
-        ensureMoviesTableExists();
         return dbHelper.delete(id);
     }
 
     public File getCsvFile() {
         return new File(context.getFilesDir(), CSV_FILE_NAME);
-    }
-
-    public void exportCurrentMoviesToCsv(OutputStream out) throws IOException {
-        CsvHelper.export(out, getAll());
     }
 
     private List<Movie> readAllFromCsv() {
