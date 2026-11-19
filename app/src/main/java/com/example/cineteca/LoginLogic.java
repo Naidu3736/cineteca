@@ -50,7 +50,10 @@ public class LoginLogic extends AppCompatActivity {
             }
 
             if (dbHelper.validateLogin(userOrEmail, password)) {
-                Notification.saludo(this, dbHelper.getUsername(userOrEmail));
+                String username = dbHelper.getUsername(userOrEmail);
+                getSharedPreferences("cineteca_session", MODE_PRIVATE)
+                        .edit().putString("current_user", username).apply();
+                Notification.saludo(this, username);
                 startActivity(new Intent(LoginLogic.this, MainActivity.class));
                 finish();
             } else {

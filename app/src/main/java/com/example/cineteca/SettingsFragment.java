@@ -91,10 +91,16 @@ public class SettingsFragment extends Fragment {
         storage.bindStorageRadioGroup(binding.rgStorageMode);
         binding.btnViewCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
 
-        // 5. Cerrar sesión: notificación de despedida y cierra la app
+        // 5. Mostrar usuario actual y botón Cerrar sesión
+        String currentUser = requireContext()
+                .getSharedPreferences("cineteca_session", android.content.Context.MODE_PRIVATE)
+                .getString("current_user", "Usuario");
+        binding.tvSettingsUserName.setText(currentUser);
+
         binding.btnSettingsLogout.setOnClickListener(v -> {
             Notification.sesionCerrada(requireContext());
-            requireActivity().finishAffinity();
+            startActivity(new android.content.Intent(requireContext(), LoginLogic.class));
+            requireActivity().finish();
         });
     }
 

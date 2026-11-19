@@ -22,7 +22,8 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     private static final String COL_POSTER = "poster_url";
 
     public MovieDbHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, "movies_" + context.getSharedPreferences("cineteca_session", Context.MODE_PRIVATE)
+                .getString("current_user", "default") + ".db", null, DB_VERSION);
     }
 
     @Override

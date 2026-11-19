@@ -31,15 +31,20 @@ public class MovieStorageManager {
         this.dbHelper = new MovieDbHelper(this.context);
     }
 
+    private String getCurrentUser() {
+        return context.getSharedPreferences("cineteca_session", Context.MODE_PRIVATE)
+                .getString("current_user", "default");
+    }
+
     public String getStorageMode() {
-        return prefs.getString(KEY_STORAGE_MODE, MODE_SQLITE);
+        return prefs.getString(KEY_STORAGE_MODE + "_" + getCurrentUser(), MODE_SQLITE);
     }
 
     public void setStorageMode(String mode) {
         if (!MODE_CSV.equals(mode) && !MODE_SQLITE.equals(mode)) {
             mode = MODE_SQLITE;
         }
-        prefs.edit().putString(KEY_STORAGE_MODE, mode).apply();
+        prefs.edit().putString(KEY_STORAGE_MODE + "_" + getCurrentUser(), mode).apply();
     }
 
     public boolean isCsvMode() {
@@ -48,19 +53,22 @@ public class MovieStorageManager {
 
     public void bindStorageRadioGroup(RadioGroup rgStorageMode) {
         if (rgStorageMode == null) return;
-
         rgStorageMode.setOnCheckedChangeListener(null);
         if (isCsvMode()) {
             rgStorageMode.check(R.id.rb_storage_csv);
+
+
         } else {
             rgStorageMode.check(R.id.rb_storage_sqlite);
         }
 
         rgStorageMode.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_storage_csv) {
+                writeAllToCsv(dbHelper.getAll())
                 setStorageMode(MODE_CSV);
+
                 Toast.makeText(group.getContext(),
-                        "Almacenamiento cambiado a CSV", Toast.LENGTH_SHORT).show();
+                        "Csv activo @Almacenamiento cambiado a CSV", Toast.LENGTH_SHORT).show();
             } else if (checkedId == R.id.rb_storage_sqlite) {
                 setStorageMode(MODE_SQLITE);
                 Toast.makeText(group.getContext(),
@@ -114,7 +122,7 @@ public class MovieStorageManager {
     }
 
     public File getCsvFile() {
-        return new File(context.getFilesDir(), CSV_FILE_NAME);
+        return new File(context.getFilesDir(), "movies_" + getCurrentUser() + ".csv");
     }
 
     private List<Movie> readAllFromCsv() {
