@@ -49,6 +49,20 @@ public class DataUsers extends SQLiteOpenHelper {
         return result != -1; // true si se guardó, false si el usuario/correo ya existe
     }
 
+    // Devuelve el nombre de usuario para not
+    public String getUsername(String userOrEmail) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + USERNAME + " FROM " + TABLE_USERS +
+                " WHERE " + USERNAME + " = ? OR " + EMAIL + " = ?", new String[]{userOrEmail, userOrEmail});
+        String name = userOrEmail;
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+        return name;
+    }
+
     public boolean validateLogin(String userOrEmail, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT " + ID + " FROM " + TABLE_USERS +
@@ -61,4 +75,18 @@ public class DataUsers extends SQLiteOpenHelper {
         return exist;
     }
 
+    public boolean updatePassword(String userOrEmail, String nuevaPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PASSWORD, nuevaPassword);
+
+        int filasupdate = db.update(
+                TABLE_USERS,
+                values,
+                USERNAME + " = ? OR " + EMAIL + " = ?",
+                new String[]{userOrEmail, userOrEmail}
+        );
+        db.close();
+        return filasupdate > 0; // true si encontró al usuario y cambió la contraseña
+    }
 }

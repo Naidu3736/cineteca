@@ -11,7 +11,8 @@ import java.util.List;
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "cineteca.db";
+    // Cambiar a "movies.db" para evitar conflicto con la BD de usuarios
+    private static final String DB_NAME = "movies.db";
     private static final int DB_VERSION = 1;
 
     private static final String TABLE = "movies";
@@ -26,7 +27,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE + " ("
                 + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_TITLE + " TEXT NOT NULL, "
                 + COL_RATING + " REAL, "
