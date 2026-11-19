@@ -9,4 +9,12 @@
     android:background="@color/black">
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="137dp"
+        android:layout_height="30dp"
+        android:text="francisco"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="529dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
