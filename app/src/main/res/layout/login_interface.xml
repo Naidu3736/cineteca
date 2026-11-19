@@ -49,8 +49,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
                         android:text="Cineteca"
-                        android:textColor="@color/white"
+                        android:textColor="@color/crimson_primary"
                         android:textSize="30sp"
                         android:textStyle="bold" />
 
@@ -98,8 +99,9 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="16dp"
                     android:text="¿Olvidaste tu contraseña?"
-                    android:textColor="@color/muted"
-                    android:textSize="13sp" />
+                    android:textColor="@color/crimson_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <!-- Botón entrar -->
                 <com.google.android.material.button.MaterialButton
@@ -112,7 +114,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:backgroundTint="@color/emerald_green"
+                    app:backgroundTint="@color/crimson_primary"
                     app:cornerRadius="28dp" />
 
                 <LinearLayout
@@ -128,8 +130,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
                     android:text="¿No tienes cuenta? Registrate"
-                    android:textColor="@color/muted"
-                    android:textSize="14sp" />
+                    android:textColor="@color/crimson_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
