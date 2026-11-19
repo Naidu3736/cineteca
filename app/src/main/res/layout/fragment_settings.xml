@@ -53,7 +53,7 @@
                         app:cardBackgroundColor="#252A34"
                         app:cardCornerRadius="26dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="@color/emerald_green"
+                        app:strokeColor="@color/crimson_primary"
                         app:strokeWidth="1.5dp">
 
                         <ImageView
@@ -62,7 +62,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="Usuario"
                             android:src="@drawable/ic_person"
-                            app:tint="@color/emerald_green" />
+                            app:tint="@color/crimson_primary" />
                     </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
@@ -93,7 +93,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@color/emerald_green"
+                            android:textColor="@color/crimson_primary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Modo de Apariencia"
-                    android:textColor="@color/emerald_green"
+                    android:textColor="@color/crimson_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -197,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Almacenamiento de Registros"
-                    android:textColor="@color/emerald_green"
+                    android:textColor="@color/crimson_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -222,7 +222,7 @@
                         android:text="Base de Datos SQLite"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:buttonTint="@color/emerald_green" />
+                        app:buttonTint="@color/crimson_primary" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rb_storage_csv"
@@ -231,7 +231,7 @@
                         android:text="Archivos CSV"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:buttonTint="@color/emerald_green" />
+                        app:buttonTint="@color/crimson_primary" />
                 </RadioGroup>
 
                 <com.google.android.material.button.MaterialButton
@@ -244,7 +244,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    app:backgroundTint="@color/emerald_green"
+                    app:backgroundTint="@color/crimson_primary"
                     app:cornerRadius="26dp"
                     app:icon="@drawable/ic_storage"
                     app:iconTint="@color/black" />
