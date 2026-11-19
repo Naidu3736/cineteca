@@ -61,6 +61,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // 1. Marcar el botón activo según el tema guardado (Dark por defecto)
+        binding.toggleDarkMode.setSaveEnabled(false);
         if (ThemeHelper.isDarkMode(requireContext())) {
             binding.toggleDarkMode.check(R.id.btn_mode_dark);
         } else {
@@ -71,23 +72,30 @@ public class SettingsFragment extends Fragment {
         ThemeHelper.applyThemeToView(binding.getRoot());
 
         // 3. Conectar los botones Tema Claro / Tema Oscuro
-        binding.toggleDarkMode.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (!isChecked) return;
-            boolean wantDark = (checkedId == R.id.btn_mode_dark);
-
+        View.OnClickListener themeClickListener = v -> {
+            boolean wantDark = (v.getId() == R.id.btn_mode_dark);
             if (wantDark != ThemeHelper.isDarkMode(requireContext())) {
                 ThemeHelper.setDarkMode(requireContext(), wantDark);
                 ThemeHelper.applyThemeToView(binding.getRoot());
                 if (getActivity() != null) {
                     ThemeHelper.applyThemeToView(getActivity().findViewById(R.id.main));
                 }
+                Notification.temaCambiado(requireContext(), wantDark ? "oscuro" : "claro");
             }
-        });
+        };
+        binding.btnModeLight.setOnClickListener(themeClickListener);
+        binding.btnModeDark.setOnClickListener(themeClickListener);
 
         // 4. Almacenamiento de registros (SQLite / CSV) y botón Descargar CSV
         storage = new MovieStorageManager(requireContext());
         storage.bindStorageRadioGroup(binding.rgStorageMode);
         binding.btnViewCsv.setOnClickListener(v -> exportLauncher.launch("movies.csv"));
+
+        // 5. Cerrar sesión: notificación de despedida y cierra la app
+        binding.btnSettingsLogout.setOnClickListener(v -> {
+            Notification.sesionCerrada(requireContext());
+            requireActivity().finishAffinity();
+        });
     }
 
     @Override

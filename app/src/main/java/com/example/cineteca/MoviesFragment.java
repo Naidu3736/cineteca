@@ -112,7 +112,6 @@ public class MoviesFragment extends Fragment {
 
     private void showAddDialog() {
         DialogAddMovieBinding form = DialogAddMovieBinding.inflate(getLayoutInflater());
-        ThemeHelper.applyThemeToView(form.getRoot());
         selectedPosterUri = "";
         activePosterButton = form.btnSelectPoster;
         form.btnSelectPoster.setOnClickListener(v ->
@@ -137,6 +136,7 @@ public class MoviesFragment extends Fragment {
 
                     db.insert(new Movie(title, rating, selectedPosterUri));
                     loadMovies();
+                    Notification.peliculaAgregada(requireContext(), title);
                 })
                 .show();
     }

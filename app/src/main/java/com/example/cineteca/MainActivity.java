@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         // 3. Cargar la pantalla de Películas por defecto
         if (savedInstanceState == null) {
             navegarA(new MoviesFragment(), false);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            actualizarBarra("Ajustes", true);
         }
 
         // 4. Manejo del botón Atrás (físico o por gesto)
@@ -95,5 +97,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             binding.materialToolbar.setNavigationIcon(null);
         }
+        ThemeHelper.applyThemeToView(binding.materialToolbar);
     }
 }

@@ -88,7 +88,7 @@ public class LoginLogic extends AppCompatActivity {
             }
 
             if (dbHelper.updatePassword(userOrEmail, newPass)) {
-                Toast.makeText(this, "Contraseña actualizada con éxito", Toast.LENGTH_SHORT).show();
+                Notification.contrasenaCambiada(this);
             } else {
                 Toast.makeText(this, "No se encontró ese usuario o correo", Toast.LENGTH_SHORT).show();
             }
