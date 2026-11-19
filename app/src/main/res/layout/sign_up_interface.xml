@@ -67,6 +67,7 @@
 
         <!-- Formulario de registro -->
         <LinearLayout
+            android:id="@+id/GoLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -131,7 +132,7 @@
 
             <!-- Volver al login -->
             <TextView
-                android:id="@+id/tvGoToLogin"
+                android:id="@+id/GLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
