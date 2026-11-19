@@ -94,7 +94,7 @@ public class SettingsFragment extends Fragment {
         // 5. Mostrar usuario actual y botón Cerrar sesión
         String currentUser = requireContext()
                 .getSharedPreferences("cineteca_session", android.content.Context.MODE_PRIVATE)
-                .getString("current_user", "Usuario");
+                .getString("currents_users", "Usuario");
         binding.tvSettingsUserName.setText(currentUser);
 
         binding.btnSettingsLogout.setOnClickListener(v -> {

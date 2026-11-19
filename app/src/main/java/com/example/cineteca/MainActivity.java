@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         if (agregarAlBackStack) {
             transaction.addToBackStack(null);
         }
-        transaction.commit();
+
     }
 
     private void actualizarBarra(String titulo, boolean mostrarFlechaAtras) {

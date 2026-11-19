@@ -60,7 +60,7 @@ public class DataUsers extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        return name;
+        return "";
     }
 
     public boolean validateLogin(String userOrEmail, String password) {

@@ -122,7 +122,7 @@ public class MovieStorageManager {
     }
 
     public File getCsvFile() {
-        return new File(context.getFilesDir(), "movies_" + getCurrentUser() + ".csv");
+        return new File(context.getFilesDir(), "movies" + getCurrentUser() + ".csv");
     }
 
     private List<Movie> readAllFromCsv() {
@@ -135,7 +135,7 @@ public class MovieStorageManager {
             List<Movie> withIds = new ArrayList<>(imported.size());
             for (int i = 0; i < imported.size(); i++) {
                 Movie m = imported.get(i);
-                withIds.add(new Movie(i + 1, m.getTitle(), m.getRating(), m.getPosterUrl()));
+                withIds.add(new Movie(1, m.getTitle(), m.getRating(), m.getPosterUrl()));
             }
             return withIds;
         } catch (IOException e) {

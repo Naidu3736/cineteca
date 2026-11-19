@@ -98,6 +98,6 @@ public class LoginLogic extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
-        builder.show();
+
     }
 }
