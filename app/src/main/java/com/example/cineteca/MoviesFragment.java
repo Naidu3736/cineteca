@@ -34,11 +34,13 @@ public class MoviesFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentMoviesBinding.inflate(inflater, container, false);
         return binding.getRoot();
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ThemeHelper.applyThemeToView(binding.getRoot());
 
         db = new MovieDbHelper(requireContext());
         adapter = new MovieAdapter();
