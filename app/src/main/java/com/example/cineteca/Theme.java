@@ -28,7 +28,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
-public class ThemeHelper {
+public class Theme {
 
     private static final String PREFS_NAME = "cineteca_theme_prefs";
     private static final String KEY_IS_DARK = "is_dark_mode";
@@ -75,11 +75,11 @@ public class ThemeHelper {
         Context context = view.getContext();
         int crimson = ContextCompat.getColor(context, R.color.crimson_primary);
 
-        // Paleta Dark Mode
+        // colores modo oscuro
         int cardDark = Color.parseColor("#1A1D24");
         int strokeDark = Color.parseColor("#2C313C");
 
-        // Paleta Light Mode (Tonos rojos / pastel)
+        // colores modo claro
         int cardLight = Color.WHITE;
         int strokeLight = Color.parseColor("#F5C2C7");       // Borde rosa pastel
         int pastelRedBg = Color.parseColor("#FDE8EA");       // Fondo pastel suave
@@ -89,7 +89,7 @@ public class ThemeHelper {
         int textPrimary = isDark ? Color.WHITE : Color.parseColor("#1D1416");
         int textSecondary = isDark ? Color.parseColor("#9BA1B0") : Color.parseColor("#6E5659");
 
-        // 1. BARRA SUPERIOR (MaterialToolbar) E ÍCONOS SUPERIORES
+        // barra superior e iconos
         if (view instanceof MaterialToolbar) {
             MaterialToolbar toolbar = (MaterialToolbar) view;
             int iconColor = isDark ? Color.WHITE : crimsonDarkText;
@@ -136,7 +136,7 @@ public class ThemeHelper {
                     }
                 }
             }
-            return; // Ya procesamos los hijos internos de la toolbar
+            return;
         }
 
 
@@ -169,7 +169,7 @@ public class ThemeHelper {
             if (closeBtn != null) {
                 closeBtn.setColorFilter(searchIconColor, PorterDuff.Mode.SRC_IN);
             }
-            return; // Evitar que applyRecursive sobrescriba las vistas internas del SearchView
+            return;
         }
 
         if (view instanceof MaterialCardView) {
